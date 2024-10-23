@@ -1,0 +1,15 @@
+.expo
+.vscode
+node_modules
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Native
+*/ios/Pods
+
+# local env files
+*/.env*.local
+
+
+.DS_Store
