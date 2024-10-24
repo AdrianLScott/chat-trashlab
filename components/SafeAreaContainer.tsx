@@ -6,7 +6,7 @@ export const SafeAreaContainer = (props: {children: React.ReactNode}) => {
   const {top: topInset} = useSafeAreaInsets();
 
   return (
-    <ThemedView style={{marginTop: topInset, flex: 1, backgroundColor: 'red'}}>
+    <ThemedView style={{marginTop: topInset, flex: 1}}>
       {props.children}
     </ThemedView>
   )
