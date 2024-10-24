@@ -1,5 +1,6 @@
 import { ConversationListDivider } from "@/components/ConversationListDivider";
 import { ConversationPreview } from "@/components/ConversationPreview";
+import { ConversationsListHeader } from "@/components/ConversationsListHeader";
 import { SafeAreaContainer } from "@/components/SafeAreaContainer";
 import { ThemedView } from "@/components/ThemedView";
 import { Conversation, getConversations } from "@/providers/conversations";
@@ -26,6 +27,7 @@ export default function Index() {
       >
         <FlatList
           data={conversations}
+          ListHeaderComponent={ConversationsListHeader}
           renderItem={({ item }) => (
             <ConversationPreview
               avatar={item.avatar}
