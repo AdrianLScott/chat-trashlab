@@ -1,15 +1,40 @@
-import { Text, View } from "react-native";
+import { ConversationListDivider } from "@/components/ConversationListDivider";
+import { ConversationPreview } from "@/components/ConversationPreview";
+import { ThemedView } from "@/components/ThemedView";
+import { Conversation, getConversations } from "@/providers/conversations";
+import { useEffect, useState } from "react";
+import { FlatList } from "react-native";
 
 export default function Index() {
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+
+  useEffect(() => {
+    // TODO: Add react query to fetch conversations
+    getConversations().then((conversations) => {
+      setConversations(conversations);
+    })
+  }, [])
+
   return (
-    <View
+    <ThemedView
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
+      <FlatList
+        data={conversations}
+        renderItem={({ item }) => (
+          <ConversationPreview 
+            avatar={item.avatar}
+            lastMessage={item.lastMessage}
+            lastMessageTime={item.lastMessageTime}
+            name={item.name}
+            unreadMessages={item.unreadMessages}
+          />
+        )}
+        ItemSeparatorComponent={ConversationListDivider}
+      />
+    </ThemedView>
   );
 }
