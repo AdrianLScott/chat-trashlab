@@ -7,6 +7,7 @@ import { Conversation, getConversations } from "@/providers/conversations";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { ThemedActivityIndicator } from "@/components/ThemedActivityIndicator";
+import { ConversationListEmptyComponent } from "./components/ConversationListEmptyComponent";
 
 export const ConversationsList = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -16,7 +17,7 @@ export const ConversationsList = () => {
     // TODO: Add react query to fetch conversations
     setTimeout(() => {
       getConversations().then((conversations) => {
-        setConversations(conversations);
+        //setConversations(conversations);
         setIsLoading(false);
       });
     }, 3000);
@@ -33,10 +34,13 @@ export const ConversationsList = () => {
         <FlatList
           data={conversations}
           ListHeaderComponent={ConversationsListHeader}
+          contentContainerStyle={{ flexGrow: 1 }}
           ListEmptyComponent={
             isLoading ? (
               <ThemedActivityIndicator size={"large"} />
-            ) : undefined
+            ) : (
+              <ConversationListEmptyComponent />
+            )
           }
           renderItem={({ item }) => (
             <ConversationPreview
