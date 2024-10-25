@@ -4,14 +4,17 @@
  */
 
 const tintColorLight = '#0a7ea4';
+const primary = '#0946e0';
 
 export const Colors = {
   light: {
-    primary: "#0946e0",
+    primary,
     text: '#3b3b3b',
     secondaryText: '#2b2b2b',
     background: '#fff',
     tint: tintColorLight,
     icon: '#687076',
+    button: primary,
+    buttonText: '#fff' 
   },
 };
