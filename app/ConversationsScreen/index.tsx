@@ -1,6 +1,6 @@
-import { ConversationListDivider } from "@/app/ConversationsList/components/ConversationListDivider";
+import { ConversationListDivider } from "@/app/ConversationsScreen/components/ConversationListDivider";
 import { ConversationPreview } from "@/components/ConversationPreview";
-import { ConversationsListHeader } from "@/app/ConversationsList/components/ConversationsListHeader";
+import { ConversationsListHeader } from "@/app/ConversationsScreen/components/ConversationsListHeader";
 import { SafeAreaContainer } from "@/components/SafeAreaContainer";
 import { ThemedView } from "@/components/ThemedView";
 import { Conversation, getConversations } from "@/providers/conversations";
