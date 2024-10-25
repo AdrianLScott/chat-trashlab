@@ -15,6 +15,7 @@ export const Colors = {
     tint: tintColorLight,
     icon: '#687076',
     button: primary,
+    buttonHighlighted: '#0840cc',
     buttonText: '#fff' 
   },
 };

@@ -1,7 +1,7 @@
 import {
   StyleProp,
   StyleSheet,
-  TouchableOpacity,
+  TouchableHighlight,
   ViewStyle,
 } from "react-native";
 import { ThemedText } from "./ThemedText";
@@ -19,18 +19,19 @@ export const ThemedButton = ({
   onPress,
 }: PropsWithChildren<ThemedButtonProps>) => {
   const buttonColor = useThemeColor({}, "button");
+  const buttonHighlighted = useThemeColor({}, "buttonHighlighted");
   const buttonTextColor = useThemeColor({}, "buttonText");
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <TouchableHighlight
+      underlayColor={buttonHighlighted}
       onPress={onPress}
       style={[{backgroundColor: buttonColor}, styles.button, style]}
     >
       <ThemedText type="defaultSemiBold" lightColor={buttonTextColor}>
         {children}
       </ThemedText>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 
