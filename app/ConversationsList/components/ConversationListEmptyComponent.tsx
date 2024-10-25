@@ -6,23 +6,23 @@ import { StyleSheet, View } from "react-native";
 
 export const ConversationListEmptyComponent = () => {
   const primaryColor = useThemeColor({}, "primary");
-  
+
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.contentContainer}>
         <MaterialCommunityIcon
           name="message-off-outline"
           size={120}
           color={primaryColor}
         />
-        <ThemedText type="subtitle" style={{ marginTop: 20 }}>
+        <ThemedText type="subtitle" style={styles.title}>
           No messages yet.
         </ThemedText>
-        <ThemedText type="default" style={{ marginTop: 10 }}>
+        <ThemedText type="default" style={styles.description}>
           When you start a conversation, it will appear here.
         </ThemedText>
       </View>
-      <ThemedButton style={{ marginBottom: 20 }} onPress={() => {}}>
+      <ThemedButton style={styles.button} onPress={() => {}}>
         Create a new conversation
       </ThemedButton>
     </View>
@@ -32,7 +32,20 @@ export const ConversationListEmptyComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
+  },
+  contentContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    marginTop: 20,
+  },
+  description: {
+    marginTop: 10,
+  },
+  button: {
+    marginBottom: 20,
   },
 });
