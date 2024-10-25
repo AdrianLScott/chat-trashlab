@@ -1,15 +1,10 @@
-import { ConversationListDivider } from "@/app/ConversationsScreen/components/ConversationListDivider";
-import { ConversationPreview } from "@/components/ConversationPreview";
-import { ConversationsListHeader } from "@/app/ConversationsScreen/components/ConversationsListHeader";
-import { SafeAreaContainer } from "@/components/SafeAreaContainer";
-import { ThemedView } from "@/components/ThemedView";
+import { ScreenContainer } from "@/components/ScreenContainer";
 import { Conversation, getConversations } from "@/providers/conversations";
 import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
-import { ThemedActivityIndicator } from "@/components/ThemedActivityIndicator";
-import { ConversationListEmptyComponent } from "./components/ConversationListEmptyComponent";
+import { ConversationsList } from "./components/ConversationsList";
+import { StyleSheet } from "react-native";
 
-export const ConversationsList = () => {
+export const ConversationsScreen = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,36 +19,15 @@ export const ConversationsList = () => {
   }, []);
 
   return (
-    <SafeAreaContainer>
-      <ThemedView
-        style={{
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        <FlatList
-          data={conversations}
-          ListHeaderComponent={ConversationsListHeader}
-          contentContainerStyle={{ flexGrow: 1 }}
-          ListEmptyComponent={
-            isLoading ? (
-              <ThemedActivityIndicator size={"large"} />
-            ) : (
-              <ConversationListEmptyComponent />
-            )
-          }
-          renderItem={({ item }) => (
-            <ConversationPreview
-              avatar={item.avatar}
-              lastMessage={item.lastMessage}
-              lastMessageTime={item.lastMessageTime}
-              name={item.name}
-              unreadMessages={item.unreadMessages}
-            />
-          )}
-          ItemSeparatorComponent={ConversationListDivider}
-        />
-      </ThemedView>
-    </SafeAreaContainer>
+    <ScreenContainer style={styles.container}>
+      <ConversationsList conversations={conversations} isLoading={isLoading} />
+    </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+});
