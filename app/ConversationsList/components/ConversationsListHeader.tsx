@@ -1,5 +1,5 @@
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { ThemedText } from "./ThemedText";
+import { ThemedText } from "@/components/ThemedText";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
