@@ -9,9 +9,10 @@ import { Colors } from '@/constants/Colors';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorName: keyof typeof Colors.light// & keyof typeof Colors.dark
 ) {
-  const theme = useColorScheme() ?? 'light';
+  //const theme = useColorScheme() ?? 'light';
+  const theme = 'light'; // TODO: For now we are only supporting light mode
   const colorFromProps = props[theme];
 
   if (colorFromProps) {

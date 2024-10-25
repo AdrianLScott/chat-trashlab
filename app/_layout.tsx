@@ -1,9 +1,17 @@
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
+  const statusBarColor = useThemeColor({}, "background");
+
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
+    <SafeAreaProvider>
+      <StatusBar style="dark" backgroundColor={statusBarColor} />
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+      </Stack>
+    </SafeAreaProvider>
   );
 }
