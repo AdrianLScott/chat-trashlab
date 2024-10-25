@@ -6,17 +6,20 @@ import { ThemedView } from "@/components/ThemedView";
 import { Conversation, getConversations } from "@/providers/conversations";
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
+import { ThemedActivityIndicator } from "@/components/ThemedActivityIndicator";
 
 export const ConversationsList = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // TODO: Add react query to fetch conversations
     setTimeout(() => {
       getConversations().then((conversations) => {
         setConversations(conversations);
+        setIsLoading(false);
       });
-    },3000)
+    }, 3000);
   }, []);
 
   return (
@@ -30,6 +33,11 @@ export const ConversationsList = () => {
         <FlatList
           data={conversations}
           ListHeaderComponent={ConversationsListHeader}
+          ListEmptyComponent={
+            isLoading ? (
+              <ThemedActivityIndicator size={"large"} />
+            ) : undefined
+          }
           renderItem={({ item }) => (
             <ConversationPreview
               avatar={item.avatar}
@@ -39,10 +47,9 @@ export const ConversationsList = () => {
               unreadMessages={item.unreadMessages}
             />
           )}
-          //ListFooterComponent={}
           ItemSeparatorComponent={ConversationListDivider}
         />
       </ThemedView>
     </SafeAreaContainer>
   );
-}
+};
