@@ -5,6 +5,7 @@ import { ConversationListEmptyComponent } from "./ConversationListEmptyComponent
 import { ConversationPreview } from "@/components/ConversationPreview";
 import { ConversationListDivider } from "./ConversationListDivider";
 import { Conversation } from "@/providers/conversations";
+import { CONVERSATIONS_LIST_LOADER_TEST_ID } from "./contants";
 
 type ConversationsListProps = {
   conversations: Conversation[];
@@ -22,7 +23,7 @@ export const ConversationsList = ({
       contentContainerStyle={{ flexGrow: 1 }}
       ListEmptyComponent={
         isLoading ? (
-          <ThemedActivityIndicator size={"large"} />
+          <ThemedActivityIndicator testID={CONVERSATIONS_LIST_LOADER_TEST_ID} size={"large"} />
         ) : (
           <ConversationListEmptyComponent />
         )
