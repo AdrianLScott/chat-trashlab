@@ -28,6 +28,7 @@ export const ConversationsList = ({
           <ConversationListEmptyComponent />
         )
       }
+      keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ConversationPreview
           avatar={item.avatar}
