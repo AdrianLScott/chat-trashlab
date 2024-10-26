@@ -16,14 +16,15 @@ import {
 import { Message } from "./components/Message";
 import { styles } from "./styles";
 
-type Message = {
+type MessageType = {
   id: string;
   text: string;
   sender: string;
+  reaction?: string;
   timestamp: number;
 };
 
-const buildMessage = (text: string, sender: string): Message => ({
+const buildMessage = (text: string, sender: string): MessageType => ({
   id: uuidGenerator.generateUUID(),
   text,
   sender,
@@ -32,7 +33,7 @@ const buildMessage = (text: string, sender: string): Message => ({
 
 const Conversation = () => {
   const [textValue, setTextValue] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
   const buttonColor = useThemeColor({}, "button");
   const inputBorder = useThemeColor({}, "inputBorder");
@@ -75,7 +76,7 @@ const Conversation = () => {
 
   const onMessageSent = async () => {
     try {
-      const newMessage: Message = buildMessage(textValue, "me");
+      const newMessage: MessageType = buildMessage(textValue, "me");
 
       setMessages((prevMessages) => {
         const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
@@ -95,7 +96,7 @@ const Conversation = () => {
 
   const scheduleAnswer = () => {
     setTimeout(() => {
-      const newMessage: Message = buildMessage("Hello there!", contactId);
+      const newMessage: MessageType = buildMessage("Hello there!", contactId);
 
       setMessages((prevMessages) => {
         const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
@@ -106,6 +107,23 @@ const Conversation = () => {
       messageService.sendMessage(contactId, newMessage);
     }, 1000);
   };
+
+  const sendLike = async (messageId: string) => {
+    try {
+      await messageService.reactMessage(contactId, messageId, "like");
+  
+      setMessages((prevMessages) => {
+        const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
+        const messageIndex = messagesCopy.findIndex((msg) => msg.id === messageId);
+        messagesCopy[messageIndex].reaction = "like";
+        return messagesCopy;
+      });
+    }
+    catch(e) {
+      alert("We had an issue while sending the like, please try again later");
+      logger.error(`Error sending like: ${e}`);
+    }
+  }
 
   return (
     <ScreenContainer>
@@ -129,7 +147,8 @@ const Conversation = () => {
             return (
               <Message
                 align="left"
-                onDoubleTap={() => alert("You double tapped a message!")}
+                hasReaction={!!item.reaction}
+                onDoubleTap={() => sendLike(item.id)}
                 outwardMessageColor={inwardMessageColor}
                 outwardMessageTextColor={inwardMessageTextColor}
                 text={item.text}
