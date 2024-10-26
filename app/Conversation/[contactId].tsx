@@ -1,6 +1,6 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
 import { ThemedText } from "@/components/ThemedText";
-import { storage, StorageType } from "@/libs/storage";
+import { conversationsStore } from "@/helpers/conversations-store";
 import { uuidGenerator } from "@/libs/uuid-generator";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -27,17 +27,15 @@ const Conversation = () => {
 
   const onMessageSent = async () => {
     try {
-      const message: Message = buildMessage(textValue, "me");
+      const newMessage: Message = buildMessage(textValue, "me");
 
       setMessages((prevMessages) => {
         const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
-        messagesCopy.push(message);
+        messagesCopy.push(newMessage);
         return messagesCopy;
       });
 
-      await storage.setItem(StorageType.conversations, {
-        [contactId]: messages,
-      });
+      await conversationsStore.storeNewMessage(contactId, newMessage);
       // TODO: Inject the message to global conversation state so it can be visible in the conversations list
       // TODO: send message to the server
 
