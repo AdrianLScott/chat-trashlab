@@ -16,6 +16,7 @@ export const Colors = {
     icon: '#687076',
     button: primary,
     buttonHighlighted: '#0840cc',
+    transparentHighlight: '#e6e6e6',
     buttonText: '#fff' 
   },
 };
