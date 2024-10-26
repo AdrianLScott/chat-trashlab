@@ -16,6 +16,7 @@ export type Conversation = {
   lastMessage: string;
   unreadMessages: number;
   lastMessageTime: string;
+  lastMessageType: 'text' | 'image';
   lastMessageTimestamp: number;
 };
 

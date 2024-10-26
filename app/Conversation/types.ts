@@ -4,4 +4,5 @@ export type MessageType = {
   sender: string;
   reaction?: string;
   timestamp: number;
+  type: 'text' | 'image';
 };

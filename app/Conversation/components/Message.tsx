@@ -1,81 +1,95 @@
-import { ThemedText } from "@/components/ThemedText";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import { MessageReaction } from "./MessageReaction";
+import { PropsWithChildren } from "react";
+import { MessageImageContent } from "./MessageImageContent";
+import { MessageTextContent } from "./MessageTextContent";
 
 type MessageProps = {
   text: string;
   align: "left" | "right";
-  outwardMessageColor: string;
-  outwardMessageTextColor: string;
+  backgroundColor: string;
+  textColor: string;
   onDoubleTap?: () => void;
   hasReaction?: boolean;
+  type?: "text" | "image";
+  style?: StyleProp<ViewStyle>;
 };
 
 export const Message = ({
-  outwardMessageColor,
-  outwardMessageTextColor,
+  backgroundColor,
+  textColor,
   align,
   text,
-  hasReaction,
   onDoubleTap,
-}: MessageProps) => {
+  type,
+  style,
+  hasReaction,
+}: PropsWithChildren<MessageProps>) => {
   const doubleTapGesture = Gesture.Tap()
     .numberOfTaps(2)
     .onStart(() => (onDoubleTap ? runOnJS(onDoubleTap)() : undefined));
 
   return (
-    <GestureDetector gesture={doubleTapGesture}>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          alignSelf: align === "left" ? "flex-start" : "flex-end",
-          flexDirection: "row",
-        }}
-      >
-        {hasReaction && align === "right" && (
-          <MessageReaction
-            style={{
-              alignSelf: "center",
-              marginRight: 5,
-            }}
-          />
-        )}
-        <ThemedText
-          style={[
-            styles.message,
-            {
-              textAlign: align === "left" ? "left" : "right",
-              backgroundColor: outwardMessageColor,
-              color: outwardMessageTextColor,
-            },
-          ]}
-        >
-          {text}
-        </ThemedText>
-        {hasReaction && align === "left" && (
-          <MessageReaction
-            style={{
-              alignSelf: "center",
-              marginLeft: 5,
-            }}
-          />
-        )}
-      </View>
-    </GestureDetector>
+    <View
+      style={[
+        { flexDirection: "row", justifyContent: "center" },
+        align === "left" ? styles.leftAlign : styles.rightAlign,
+      ]}
+    >
+      {hasReaction && align === "right" && (
+        <MessageReaction
+          style={{
+            alignSelf: "center",
+            marginRight: 5,
+          }}
+        />
+      )}
+      <GestureDetector gesture={doubleTapGesture}>
+        <View style={[styles.contentContainer, { backgroundColor }, style]}>
+          {type === "image" ? (
+            <MessageImageContent base64Image={text} height={300} width={300} />
+          ) : (
+            <MessageTextContent
+              textColor={textColor}
+              align={align}
+              text={text}
+            />
+          )}
+        </View>
+      </GestureDetector>
+      {hasReaction && align === "left" && (
+        <MessageReaction
+          style={{
+            alignSelf: "center",
+            marginLeft: 5,
+          }}
+        />
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  message: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+  contentContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
     borderRadius: 8,
-    marginVertical: 2,
   },
-  messageText: {
-    fontSize: 16,
+  leftAlign: {
+    alignSelf: "flex-start",
+  },
+  rightAlign: {
+    alignSelf: "flex-end",
+  },
+  rightReaction: {
+    alignSelf: "center",
+    marginRight: 5,
+  },
+  leftReaction: {
+    alignSelf: "center",
+    marginLeft: 5,
   },
 });

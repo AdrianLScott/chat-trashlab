@@ -9,6 +9,7 @@ export type StoredConversation = {
   reaction?: string;
   sender: string;
   timestamp: number;
+  type: "text" | "image";
 };
 
 export type StoredConversations = { [key: string]: StoredConversation[] };

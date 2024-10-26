@@ -12,21 +12,22 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
-import { Message } from "./components/Message";
 import { styles } from "./styles";
 import {
-  useMediaLibraryPermissions,
+  launchImageLibraryAsync,
+  MediaTypeOptions,
 } from "expo-image-picker";
 import { MessageType } from "./types";
 import { useConversationColors } from "./hooks/useConversationColors";
 import { buildMessage } from "./utils/message-builder";
+import { ImagesIcon } from "./components/ImagesIcon";
+import * as FileSystem from "expo-file-system";
+import { Message } from "./components/Message";
 
 const Conversation = () => {
   const [textValue, setTextValue] = useState("");
   const [messages, setMessages] = useState<MessageType[]>([]);
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
-  const [mediaPermissionStatus, requestMediaPermission] =
-    useMediaLibraryPermissions();
   const {
     buttonColor,
     inputBorder,
@@ -34,7 +35,7 @@ const Conversation = () => {
     outwardMessageTextColor,
     inwardMessageColor,
     inwardMessageTextColor,
-    highlightedButtonColor
+    highlightedButtonColor,
   } = useConversationColors();
 
   useEffect(() => {
@@ -57,12 +58,10 @@ const Conversation = () => {
     async function fetchMessages() {
       try {
         const storedMessages = await messageService.getConversation(contactId);
-  
         if (storedMessages) {
           setMessages(storedMessages);
         }
-      }
-      catch (e) {
+      } catch (e) {
         Alert.alert(
           "We had an issue while fetching conversation, please try again later"
         );
@@ -91,7 +90,7 @@ const Conversation = () => {
 
       // Temp: Simulate a user response
       scheduleAnswer();
-    } catch(e) {
+    } catch (e) {
       logger.error(`Error sending message ${e}`);
       // if something fails in the process we should warn the user
     }
@@ -125,6 +124,32 @@ const Conversation = () => {
     }
   };
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.2,
+    });
+
+    if (result.canceled) {
+      return;
+    }
+
+    const uri = result.assets[0].uri;
+    const base64Image = await FileSystem.readAsStringAsync(uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    // send message
+    const newMessage: MessageType = buildMessage(base64Image, "me", "image");
+
+    messageService.sendMessage(contactId, newMessage);
+
+    updateMessages(newMessage);
+  };
+
   return (
     <ScreenContainer>
       <View style={styles.container}>
@@ -138,19 +163,22 @@ const Conversation = () => {
               return (
                 <Message
                   align="right"
-                  outwardMessageColor={outwardMessageColor}
-                  outwardMessageTextColor={outwardMessageTextColor}
+                  style={{ marginTop: 5 }}
+                  backgroundColor={outwardMessageColor}
+                  textColor={outwardMessageTextColor}
                   text={item.text}
+                  type={item.type}
                 />
               );
             }
             return (
               <Message
                 align="left"
+                style={{ marginTop: 5 }}
                 hasReaction={!!item.reaction}
                 onDoubleTap={() => sendLike(item.id)}
-                outwardMessageColor={inwardMessageColor}
-                outwardMessageTextColor={inwardMessageTextColor}
+                backgroundColor={inwardMessageColor}
+                textColor={inwardMessageTextColor}
                 text={item.text}
               />
             );
@@ -158,7 +186,7 @@ const Conversation = () => {
         />
       </View>
       <View style={styles.actionsContainer}>
-        {/* <ImagesIcon onPress={onAttachImagePress} /> */}
+        <ImagesIcon onPress={pickImage} />
         <View style={[styles.inputContainer, { borderColor: inputBorder }]}>
           {/* TODO: It should be a ThemedInput from global components folder */}
           <TextInput
