@@ -24,6 +24,7 @@ export const formatConversations = (
       lastMessage: lastMessage.text,
       unreadMessages: 0,
       lastMessageTimestamp: lastMessage.timestamp,
+      lastMessageType: lastMessage.type,
       lastMessageTime: formatDate(lastMessage.timestamp),
     };
   });

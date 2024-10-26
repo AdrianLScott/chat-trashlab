@@ -34,7 +34,7 @@ export const ConversationsList = ({
         <ConversationPreview
           onPress={() => router.navigate(`/Conversation/${item.id}`)}
           avatar={item.avatar}
-          lastMessage={item.lastMessage}
+          lastMessage={item.lastMessageType === "image" ? "📷 Send an image" : item.lastMessage}
           lastMessageTime={item.lastMessageTime}
           name={item.name}
           unreadMessages={item.unreadMessages}
