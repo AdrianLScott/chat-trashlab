@@ -1,5 +1,6 @@
 import { Avatar } from "@/components/Avatar";
 import { ThemedText } from "@/components/ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { memo } from "react";
 import { StyleSheet, TouchableHighlight } from "react-native";
 
@@ -11,10 +12,12 @@ type ContactPreviewProps = {
 
 export const ContactPreview = memo(
   ({ avatar, name, onPress }: ContactPreviewProps) => {
+    const transparentHighlight = useThemeColor({}, "transparentHighlight");
+
     return (
       <TouchableHighlight
         onPress={onPress}
-        underlayColor={"#e6e6e6"}
+        underlayColor={transparentHighlight}
         style={styles.container}
       >
         <>
