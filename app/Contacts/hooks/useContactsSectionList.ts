@@ -6,6 +6,7 @@ export const useContactsSectionList = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
 
   useEffect(() => {
+    // TODO: move to react-query
     getContacts().then((res) => {
       setContacts(res);
     });
