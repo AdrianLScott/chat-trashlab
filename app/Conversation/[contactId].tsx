@@ -85,9 +85,26 @@ const Conversation = () => {
       // TODO: send message to the server
 
       setTextValue("");
+
+      // Temp: Simulate a user response
+      scheduleAnswer();
     } catch {
       // if something fails in the process we should warn the user
     }
+  };
+
+  const scheduleAnswer = () => {
+    setTimeout(() => {
+      const newMessage: Message = buildMessage("Hello there!", contactId);
+
+      setMessages((prevMessages) => {
+        const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
+        messagesCopy.push(newMessage);
+        return messagesCopy;
+      });
+
+      conversationsStore.storeNewMessage(contactId, newMessage);
+    }, 1000);
   };
 
   return (
