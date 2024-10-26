@@ -11,6 +11,10 @@ export default function RootLayout() {
       <StatusBar style="dark" backgroundColor={statusBarColor} />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Contacts/index"
+          options={{ presentation: "modal", headerTitle: "Contacts" }}
+        />
       </Stack>
     </SafeAreaProvider>
   );
