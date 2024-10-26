@@ -1,12 +1,20 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
 import { ThemedText } from "@/components/ThemedText";
 import { conversationsStore } from "@/helpers/conversations-store";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import { logger } from "@/libs/logger";
 import { uuidGenerator } from "@/libs/uuid-generator";
 import { getContact } from "@/providers/contacts";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, TextInput, TouchableHighlight, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  TextInput,
+  TouchableHighlight,
+  View,
+} from "react-native";
 
 type Message = {
   id: string;
@@ -25,35 +33,42 @@ const buildMessage = (text: string, sender: string): Message => ({
 const Conversation = () => {
   const [textValue, setTextValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-  const { contactId } = useLocalSearchParams<{contactId: string}>();
-  
+  const { contactId } = useLocalSearchParams<{ contactId: string }>();
+
+  const buttonTextColor = useThemeColor({}, "buttonText");
+  const buttonColor = useThemeColor({}, "button");
+  const inputBorder = useThemeColor({}, "inputBorder");
+
   useEffect(() => {
-    getContact(contactId).then((contact) => {
-      if (!contact) {
-        alert("We had an issue fetching the contact, please try again later");
-        logger.error("Error fetching contact");
-        router.navigate("/Contacts");
-        return;
-      }
-  
-      router.setParams({ contactName: contact.name });
-  
-      const fetchMessages = async () => {
-        const storedMessages = await conversationsStore.getConversation(contactId);
-  
-        if (storedMessages) {
-          setMessages(storedMessages);
+    getContact(contactId)
+      .then((contact) => {
+        if (!contact) {
+          alert("We had an issue fetching the contact, please try again later");
+          logger.error("Error fetching contact");
+          router.navigate("/Contacts");
+          return;
         }
-      };
-  
-      fetchMessages();
-    })
-    .catch((e) => {
-      alert("We had an issue fetching the contact, please try again later");
-      logger.error(e);
-      router.navigate("/Contacts");
-    })
-  }, [])
+
+        router.setParams({ contactName: contact.name });
+
+        const fetchMessages = async () => {
+          const storedMessages = await conversationsStore.getConversation(
+            contactId
+          );
+
+          if (storedMessages) {
+            setMessages(storedMessages);
+          }
+        };
+
+        fetchMessages();
+      })
+      .catch((e) => {
+        alert("We had an issue fetching the contact, please try again later");
+        logger.error(e);
+        router.navigate("/Contacts");
+      });
+  }, []);
 
   const onMessageSent = async () => {
     try {
@@ -77,7 +92,7 @@ const Conversation = () => {
 
   return (
     <ScreenContainer>
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <FlatList
           data={messages}
           keyExtractor={(item) => item.id}
@@ -85,21 +100,50 @@ const Conversation = () => {
           renderItem={({ item }) => <ThemedText>{item.text}</ThemedText>}
         />
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <TextInput
-          style={{ flex: 1 }}
-          value={textValue}
-          onChangeText={(val) => setTextValue(val)}
-        />
+      <View style={styles.actionsContainer}>
+        <View style={[styles.inputContainer, { borderColor: inputBorder }]}>
+          <TextInput
+            style={styles.textInput}
+            value={textValue}
+            onChangeText={(val) => setTextValue(val)}
+          />
+        </View>
         <TouchableHighlight
           onPress={onMessageSent}
-          style={{ backgroundColor: "blue", padding: 15 }}
+          style={[styles.button, { backgroundColor: buttonColor }]}
         >
-          <ThemedText>Send</ThemedText>
+          <MaterialCommunityIcons name="send" color={"white"} size={30} />
         </TouchableHighlight>
       </View>
     </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  actionsContainer: {
+    flexDirection: "row",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+  },
+  inputContainer: {
+    flex: 1,
+    borderRadius: 10,
+    height: "100%",
+    borderWidth: 0.7,
+    marginRight: 5,
+    paddingHorizontal: 10,
+  },
+  textInput: {
+    flex: 1,
+  },
+  button: {
+    padding: 12,
+    borderRadius: 8,
+    paddingHorizontal: 20,
+  },
+});
 
 export default Conversation;
