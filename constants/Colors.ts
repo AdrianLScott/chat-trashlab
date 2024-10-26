@@ -12,7 +12,7 @@ export const Colors = {
     secondaryText: '#2b2b2b',
     background: '#fff',
     dividerColor: '#858484',
-    icon: '#687076',
+    icon: primary,
     button: primary,
     buttonHighlighted: '#0840cc',
     transparentHighlight: '#e6e6e6',

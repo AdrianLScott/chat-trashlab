@@ -7,14 +7,10 @@ import { getContact } from "@/providers/contacts";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import {
-  FlatList,
-  TextInput,
-  TouchableHighlight,
-  View,
-} from "react-native";
+import { FlatList, TextInput, TouchableHighlight, View } from "react-native";
 import { Message } from "./components/Message";
 import { styles } from "./styles";
+import { ImagesIcon } from "./components/ImagesIcon";
 
 type MessageType = {
   id: string;
@@ -42,6 +38,7 @@ const Conversation = () => {
   const inwardMessageColor = useThemeColor({}, "inwardMessage");
   const inwardMessageTextColor = useThemeColor({}, "inwardMessageText");
   const highlightedButtonColor = useThemeColor({}, "buttonHighlighted");
+  const iconColor = useThemeColor({}, "icon");
 
   useEffect(() => {
     // TODO: Improve how we fetch the conversation and error handling
@@ -68,7 +65,9 @@ const Conversation = () => {
         await fetchMessages();
       })
       .catch((e) => {
-        alert("We had an issue while fetching conversation, please try again later");
+        alert(
+          "We had an issue while fetching conversation, please try again later"
+        );
         logger.error(e);
         router.navigate("/Contacts");
       });
@@ -111,19 +110,20 @@ const Conversation = () => {
   const sendLike = async (messageId: string) => {
     try {
       await messageService.reactMessage(contactId, messageId, "like");
-  
+
       setMessages((prevMessages) => {
         const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
-        const messageIndex = messagesCopy.findIndex((msg) => msg.id === messageId);
+        const messageIndex = messagesCopy.findIndex(
+          (msg) => msg.id === messageId
+        );
         messagesCopy[messageIndex].reaction = "like";
         return messagesCopy;
       });
-    }
-    catch(e) {
+    } catch (e) {
       alert("We had an issue while sending the like, please try again later");
       logger.error(`Error sending like: ${e}`);
     }
-  }
+  };
 
   return (
     <ScreenContainer>
@@ -158,6 +158,7 @@ const Conversation = () => {
         />
       </View>
       <View style={styles.actionsContainer}>
+        <ImagesIcon onPress={() => alert('Attach imach')} />
         <View style={[styles.inputContainer, { borderColor: inputBorder }]}>
           {/* TODO: It should be a ThemedInput from global components folder */}
           <TextInput
