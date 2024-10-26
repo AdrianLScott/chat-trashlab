@@ -71,3 +71,9 @@ const contacts: Contact[] = [
 export const getContacts = async (): Promise<Contact[]> => {
   return contacts;
 };
+
+export const getContact = async (id: string) => {
+  const contacts = await getContacts();
+
+  return contacts.find((contact) => contact.id === id);
+}

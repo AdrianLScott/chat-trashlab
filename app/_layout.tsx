@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -5,6 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
   const statusBarColor = useThemeColor({}, "background");
+  //storage.clear()
 
   return (
     <SafeAreaProvider>
@@ -17,7 +19,9 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name="Conversation/[contactId]"
-          options={{ headerTitle: "Conversation" }}
+          // TODO: Check how to type this with expo 
+          // @ts-ignore
+          options={({ route }) => ({ headerTitle: route.params?.contactName })}
         />
       </Stack>
     </SafeAreaProvider>

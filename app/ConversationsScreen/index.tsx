@@ -4,21 +4,37 @@ import { useEffect, useState } from "react";
 import { ConversationsList } from "./components/ConversationsList";
 import { StyleSheet } from "react-native";
 import { FloatingButton } from "@/components/FloatingButton";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
+import { getContacts } from "@/providers/contacts";
 
 export const ConversationsScreen = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     // TODO: Add react query to fetch conversations
     setTimeout(() => {
-      getConversations().then((conversations) => {
+      fetchData();  
+    }, 3000);
+    
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchData();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+
+  }, []);
+
+  const fetchData = () => {
+    getContacts().then((contacts) => {
+      getConversations(contacts).then((conversations) => {
         setConversations(conversations);
         setIsLoading(false);
       });
-    }, 3000);
-  }, []);
+    })
+  }
 
   return (
     <ScreenContainer style={styles.container}>
