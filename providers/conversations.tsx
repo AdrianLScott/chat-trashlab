@@ -1,5 +1,6 @@
 const conversations = [{
   id: '1',
+  contactId: '1',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "John Doe",
   lastMessage: "Hello",
@@ -7,6 +8,7 @@ const conversations = [{
   lastMessageTime: "10:00 a.m.",
 }, {
   id: '2',
+  contactId: '2',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Jane Doe",
   lastMessage: "Hi",
@@ -14,6 +16,7 @@ const conversations = [{
   lastMessageTime: "9:00 a.m.",
 }, {
   id: '3',
+  contactId: '3',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Alice Queen",
   lastMessage: "Hey",
@@ -21,6 +24,7 @@ const conversations = [{
   lastMessageTime: "8:00 a.m.",
 }, {
   id: '4',
+  contactId: '4',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Bob Smith",
   lastMessage: "Sup",
@@ -28,6 +32,7 @@ const conversations = [{
   lastMessageTime: "7:00 a.m.",
 }, {
   id: '5',
+  contactId: '5',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Charlie Brown",
   lastMessage: "Yo",
@@ -35,6 +40,7 @@ const conversations = [{
   lastMessageTime: "6:00 a.m.",
 }, {
   id: '6',
+  contactId: '6',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "David Smith",
   lastMessage: "Hola",
@@ -42,6 +48,7 @@ const conversations = [{
   lastMessageTime: "5:00 a.m.",
 }, {
   id: '7',
+  contactId: '7',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Eve Brown",
   lastMessage: "Bonjour",
@@ -49,6 +56,7 @@ const conversations = [{
   lastMessageTime: "4:00 a.m.",
 }, {
   id: '8',
+  contactId: '8',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Frank Adam",
   lastMessage: "Ciao",
@@ -56,6 +64,7 @@ const conversations = [{
   lastMessageTime: "3:00 a.m.",
 }, {
   id: '9',
+  contactId: '9',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Grace Carter",
   lastMessage: "Hallo this is a large message that should be truncated",
@@ -63,6 +72,7 @@ const conversations = [{
   lastMessageTime: "2:00 a.m.",
 }, {
   id: '10',
+  contactId: '10',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Heidi Ewing",
   lastMessage: "Salut",
@@ -70,6 +80,7 @@ const conversations = [{
   lastMessageTime: "1:00 a.m.",
 }, {
   id: '11',
+  contactId: '11',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Ivy Brown",
   lastMessage: "Namaste",
@@ -77,6 +88,7 @@ const conversations = [{
   lastMessageTime: "12:00 a.m.",
 }, {
   id: '12',
+  contactId: '12',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Jack Doe",
   lastMessage: "Privet",
@@ -84,6 +96,7 @@ const conversations = [{
   lastMessageTime: "11:00 PM",
 }, {
   id: '13',
+  contactId: '13',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Kate Smith",
   lastMessage: "Nihao",
@@ -91,6 +104,7 @@ const conversations = [{
   lastMessageTime: "10:00 PM",
 }, {
   id: '14',
+  contactId: '14',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Liam Brown",
   lastMessage: "Konnichiwa",
@@ -98,6 +112,7 @@ const conversations = [{
   lastMessageTime: "9:00 PM",
 }, {
   id: '15',
+  contactId: '15',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Mia Doe",
   lastMessage: "Annyeonghaseyo",
@@ -105,6 +120,7 @@ const conversations = [{
   lastMessageTime: "8:00 PM",
 }, {
   id: '16',
+  contactId: '16',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Noah Smith",
   lastMessage: "Sawasdee",
@@ -112,6 +128,7 @@ const conversations = [{
   lastMessageTime: "7:00 PM",
 }, {
   id: '17',
+  contactId: '17',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Olivia Brown",
   lastMessage: "Salam",
@@ -119,6 +136,7 @@ const conversations = [{
   lastMessageTime: "6:00 PM",
 }, {
   id: '18',
+  contactId: '18',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Peter Doe",
   lastMessage: "Shalom",
@@ -126,6 +144,7 @@ const conversations = [{
   lastMessageTime: "5:00 PM",
 }, {
   id: '19',
+  contactId: '19',
   avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
   name: "Quinn Smith",
   lastMessage: "Zdravstvuyte",
