@@ -21,7 +21,7 @@ export const ContactPreview = ({
     >
       <>
         <Avatar uri={avatar} style={{ marginRight: 15 }} />
-        <ThemedText type="defaultSemiBold">{name}</ThemedText>
+        <ThemedText>{name}</ThemedText>
       </>
     </TouchableHighlight>
   );
