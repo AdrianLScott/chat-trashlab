@@ -1,9 +1,11 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
 import { ThemedText } from "@/components/ThemedText";
 import { conversationsStore } from "@/helpers/conversations-store";
+import { logger } from "@/libs/logger";
 import { uuidGenerator } from "@/libs/uuid-generator";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { getContact } from "@/providers/contacts";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { FlatList, TextInput, TouchableHighlight, View } from "react-native";
 
 type Message = {
@@ -24,6 +26,34 @@ const Conversation = () => {
   const [textValue, setTextValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const { contactId } = useLocalSearchParams<{contactId: string}>();
+  
+  useEffect(() => {
+    getContact(contactId).then((contact) => {
+      if (!contact) {
+        alert("We had an issue fetching the contact, please try again later");
+        logger.error("Error fetching contact");
+        router.navigate("/Contacts");
+        return;
+      }
+  
+      router.setParams({ contactName: contact.name });
+  
+      const fetchMessages = async () => {
+        const storedMessages = await conversationsStore.getConversation(contactId);
+  
+        if (storedMessages) {
+          setMessages(storedMessages);
+        }
+      };
+  
+      fetchMessages();
+    })
+    .catch((e) => {
+      alert("We had an issue fetching the contact, please try again later");
+      logger.error(e);
+      router.navigate("/Contacts");
+    })
+  }, [])
 
   const onMessageSent = async () => {
     try {
