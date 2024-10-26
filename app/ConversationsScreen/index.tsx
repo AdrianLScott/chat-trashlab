@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import { FloatingButton } from "@/components/FloatingButton";
 import { router, useNavigation } from "expo-router";
 import { getContacts } from "@/providers/contacts";
+import { logger } from "@/libs/logger";
 
 export const ConversationsScreen = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -27,13 +28,18 @@ export const ConversationsScreen = () => {
 
   }, []);
 
-  const fetchData = () => {
-    getContacts().then((contacts) => {
-      getConversations(contacts).then((conversations) => {
-        setConversations(conversations);
-        setIsLoading(false);
-      });
-    })
+  const fetchData = async () => {
+    try {
+      const contacts = await getContacts();
+      const conversations = await getConversations(contacts);
+  
+      setConversations(conversations);
+      setIsLoading(false);
+    }
+    catch(e) {
+      alert('There was an error fetching the conversations');
+      logger.error(`Error fetching conversations ${e}`);
+    }
   }
 
   return (
