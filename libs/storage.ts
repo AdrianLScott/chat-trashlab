@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export enum StorageType {
-  conversations = 'conversations',
+  conversations = "conversations",
 }
 
 /**
@@ -23,8 +23,15 @@ const getItem = async (key: StorageType): Promise<string | null> => {
   return AsyncStorage.getItem(key);
 };
 
+/**
+ * Clear all items from local storage
+ */
+const clear = async (): Promise<void> => AsyncStorage.clear();
+
+
 export const storage = {
   setItem,
   getItem,
-  StorageType
-}
+  clear,
+  StorageType,
+};
