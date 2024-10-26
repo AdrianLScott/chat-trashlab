@@ -1,9 +1,9 @@
-import { conversationsStore } from "@/helpers/conversations-store";
+import { messageService } from "@/helpers/message-service";
 import { getConversations } from "../../conversations";
 import { Contact } from "../../contacts";
 import { formatDate } from "@/providers/conversations/utils";
 
-jest.mock("@/helpers/conversations-store");
+jest.mock("@/helpers/message-service");
 
 describe("getConversations", () => {
   const mockContacts: Contact[] = [
@@ -22,14 +22,14 @@ describe("getConversations", () => {
   ];
 
   it("should return an empty array when storedConversations is null", async () => {
-    (conversationsStore.getConversations as jest.Mock).mockResolvedValue(null);
+    (messageService.getConversations as jest.Mock).mockResolvedValue(null);
 
     const result = await getConversations(mockContacts);
     expect(result).toEqual([]);
   });
 
   it("should return an empty array when storedConversations is empty", async () => {
-    (conversationsStore.getConversations as jest.Mock).mockResolvedValue({});
+    (messageService.getConversations as jest.Mock).mockResolvedValue({});
 
     const result = await getConversations(mockContacts);
     expect(result).toEqual([]);
@@ -40,7 +40,7 @@ describe("getConversations", () => {
       "1": [{ text: "Hello", timestamp: new Date("2023-01-01T12:00:00Z").getTime() }],
       "2": [{ text: "Hi", timestamp: new Date("2023-01-02T12:00:00Z").getTime() }],
     };
-    (conversationsStore.getConversations as jest.Mock).mockResolvedValue(
+    (messageService.getConversations as jest.Mock).mockResolvedValue(
       storedConversations
     );
 
@@ -73,7 +73,7 @@ describe("getConversations", () => {
     const storedConversations = {
       "1": [{ text: "Hello", timestamp: new Date().getTime() }],
     };
-    (conversationsStore.getConversations as jest.Mock).mockResolvedValue(
+    (messageService.getConversations as jest.Mock).mockResolvedValue(
       storedConversations
     );
 
@@ -86,7 +86,7 @@ describe("getConversations", () => {
       "1": [{ text: "Hello", timestamp:  new Date("2023-01-01T12:00:00Z").getTime() }],
       "3": [{ text: "Hey", timestamp: new Date("2023-01-03T12:00:00Z").getTime() }],
     };
-    (conversationsStore.getConversations as jest.Mock).mockResolvedValue(
+    (messageService.getConversations as jest.Mock).mockResolvedValue(
       storedConversations
     );
 
@@ -110,7 +110,7 @@ describe("getConversations", () => {
       "1": [{ text: "Hello", timestamp: "2023-01-01T12:00:00Z" }],
       "2": [{ text: "Hi", timestamp: "2023-01-02T12:00:00Z" }],
     };
-    (conversationsStore.getConversations as jest.Mock).mockResolvedValue(
+    (messageService.getConversations as jest.Mock).mockResolvedValue(
       storedConversations
     );
 

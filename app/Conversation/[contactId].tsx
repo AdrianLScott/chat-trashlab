@@ -1,5 +1,5 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
-import { conversationsStore } from "@/helpers/conversations-store";
+import { messageService } from "@/helpers/message-service";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { logger } from "@/libs/logger";
 import { uuidGenerator } from "@/libs/uuid-generator";
@@ -56,7 +56,7 @@ const Conversation = () => {
         router.setParams({ contactName: contact.name });
 
         const fetchMessages = async () => {
-          const storedMessages = await conversationsStore.getConversation(
+          const storedMessages = await messageService.getConversation(
             contactId
           );
 
@@ -83,9 +83,7 @@ const Conversation = () => {
         return messagesCopy;
       });
 
-      await conversationsStore.storeNewMessage(contactId, newMessage);
-      // TODO: Inject the message to global conversation state so it can be visible in the conversations list
-      // TODO: send message to the server
+      await messageService.sendMessage(contactId, newMessage);
       setTextValue("");
 
       // Temp: Simulate a user response
@@ -105,7 +103,7 @@ const Conversation = () => {
         return messagesCopy;
       });
 
-      conversationsStore.storeNewMessage(contactId, newMessage);
+      messageService.sendMessage(contactId, newMessage);
     }, 1000);
   };
 

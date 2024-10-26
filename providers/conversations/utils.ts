@@ -1,4 +1,4 @@
-import { StoredConversations } from "@/helpers/conversations-store";
+import { StoredConversations } from "@/helpers/message-service";
 import { Conversation } from ".";
 import { Contact } from "../contacts";
 

@@ -3,8 +3,8 @@
  * It should be used to get the conversations from wherever they are stored.
  */
 import {
-  conversationsStore,
-} from "@/helpers/conversations-store";
+  messageService,
+} from "@/helpers/message-service";
 import { Contact } from "../contacts";
 import { formatConversations, latestFirst } from "./utils";
 
@@ -20,7 +20,7 @@ export type Conversation = {
 };
 
 export const getConversations = async (contacts: Contact[]): Promise<Conversation[]> => {
-  const storedConversations = await conversationsStore.getConversations();
+  const storedConversations = await messageService.getConversations();
 
   if (!storedConversations) {
     return [];

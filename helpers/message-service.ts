@@ -1,5 +1,5 @@
 /**
- * This file is to handle the conversations store.
+ * This would be the message-service, for now it only get and set values from storage but is replaceble.
  */
 import { storage, StorageType } from "@/libs/storage";
 
@@ -32,7 +32,7 @@ const getConversations = async (): Promise<StoredConversations> => {
 /**
  * Set conversation in local storage
  */
-const storeNewMessage = async (
+const sendMessage = async (
   contactId: string,
   newMessage: StoredConversation
 ) => {
@@ -66,8 +66,8 @@ const getConversation = async (
   return storedConversations[contactId] || null;
 };
 
-export const conversationsStore = {
-  storeNewMessage,
+export const messageService = {
+  sendMessage,
   getConversation,
   getConversations,
 };
