@@ -2,7 +2,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { StyleSheet, View } from "react-native";
 
 export const ConversationListDivider = () => {
-  const color = useThemeColor({}, "tint");
+  const color = useThemeColor({}, "dividerColor");
 
   return <View style={[styles.divider, {backgroundColor: color}]} />;
 };
