@@ -22,7 +22,7 @@ export const FloatingButton = ({ onPress, style }: FloatingButtonProps) => {
       underlayColor={buttonHighlighted}
       style={[styles.buttonContainer, { backgroundColor: buttonColor }, style]}
     >
-      <MaterialCommunityIcons name="message-text" size={40} color={"white"} />
+      <MaterialCommunityIcons name="message-text" size={35} color={"white"} />
     </TouchableHighlight>
   );
 };
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
+    padding: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

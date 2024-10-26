@@ -2,6 +2,7 @@ import { ThemedButton } from "@/components/ThemedButton";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
+import { router } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 export const ConversationListEmptyComponent = () => {
@@ -22,7 +23,7 @@ export const ConversationListEmptyComponent = () => {
           When you start a conversation, it will appear here.
         </ThemedText>
       </View>
-      <ThemedButton style={styles.button} onPress={() => {}}>
+      <ThemedButton style={styles.button} onPress={() => router.push('/Contacts')}>
         Create a new conversation
       </ThemedButton>
     </View>

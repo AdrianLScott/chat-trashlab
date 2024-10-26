@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ConversationsList } from "./components/ConversationsList";
 import { StyleSheet } from "react-native";
 import { FloatingButton } from "@/components/FloatingButton";
+import { router } from "expo-router";
 
 export const ConversationsScreen = () => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -25,7 +26,7 @@ export const ConversationsScreen = () => {
       {conversations.length > 0 && (
         <FloatingButton
           style={styles.newConversationButton}
-          onPress={() => alert("this button was pressed")}
+          onPress={() => router.navigate('/Contacts')}
         />
       )}
     </ScreenContainer>
