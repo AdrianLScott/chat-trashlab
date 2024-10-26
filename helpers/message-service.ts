@@ -6,6 +6,7 @@ import { storage, StorageType } from "@/libs/storage";
 export type StoredConversation = {
   id: string;
   text: string;
+  reaction?: string;
   sender: string;
   timestamp: number;
 };
@@ -47,6 +48,30 @@ const sendMessage = async (
   await storage.setItem(StorageType.conversations, conversations);
 };
 
+const reactMessage = async (contactId: string, messageId: string, reaction: string) => {
+  const prevConversation = await getConversation(contactId);
+  if (!prevConversation) {
+    return;
+  }
+
+  const updatedMessages = prevConversation.map((message) => {
+    if (message.id === messageId) {
+      return {
+        ...message,
+        reaction,
+      };
+    }
+    return message;
+  });
+
+  const conversations = await getConversations();
+  conversations[contactId] = updatedMessages;
+  
+  await storage.setItem(StorageType.conversations, conversations);  
+
+  return updatedMessages;
+}
+
 /**
  * Get conversation from local storage
  */
@@ -70,4 +95,5 @@ export const messageService = {
   sendMessage,
   getConversation,
   getConversations,
+  reactMessage
 };

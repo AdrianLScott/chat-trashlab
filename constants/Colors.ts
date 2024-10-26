@@ -22,5 +22,6 @@ export const Colors = {
     outwardMessageText: '#fff',
     inwardMessage: '#f1f1f1',
     inwardMessageText: '#3b3b3b',
+    reactionBackground: '#f1f1f1',
   },
 };
