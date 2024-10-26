@@ -7,6 +7,12 @@ export type Contact = {
 
 const contacts: Contact[] = [
   {
+    id: "0",
+    avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
+    name: "Aaron Johnson",
+    lastOnline: "10:00 a.m.",
+  },
+  {
     id: "1",
     avatar: `https://avatar.iran.liara.run/public?${Math.random()}`,
     name: "Alice Smith",
