@@ -1,4 +1,4 @@
-type Contact = {
+export type Contact = {
   id: string;
   avatar: string;
   name: string;
@@ -62,6 +62,6 @@ const contacts: Contact[] = [
   },
 ];
 
-export const getContacts = async () => {
+export const getContacts = async (): Promise<Contact[]> => {
   return contacts;
 };
