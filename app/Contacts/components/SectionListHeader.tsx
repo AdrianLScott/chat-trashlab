@@ -1,12 +1,13 @@
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 
 type SectionListHeaderProps = {
   title: string;
 };
 
-export const SectionListHeader = ({ title }: SectionListHeaderProps) => {
+export const SectionListHeader = memo(({ title }: SectionListHeaderProps) => {
   const backgroundColor = useThemeColor({}, "background");
   const primaryColor = useThemeColor({}, "primary");
 
@@ -24,7 +25,7 @@ export const SectionListHeader = ({ title }: SectionListHeaderProps) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
