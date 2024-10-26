@@ -5,6 +5,7 @@ import { Colors } from "@/constants/Colors";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "../ThemedText";
 import { styles } from "./styles";
+import { Avatar } from "../Avatar";
 
 type ConversationPreviewProps = {
   avatar: string;
@@ -26,7 +27,7 @@ export const ConversationPreview = memo(
 
     return (
       <View style={styles.container}>
-        <Image source={{ uri: avatar }} style={styles.avatar} />
+        <Avatar uri={avatar} size="large" style={styles.avatar} />
         <View style={styles.messageContainer}>
           <View style={styles.messageHeaderContainer}>
             <ThemedText style={styles.messageSenderName}>{name}</ThemedText>
