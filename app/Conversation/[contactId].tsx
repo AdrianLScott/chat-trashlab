@@ -1,6 +1,8 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
 import { ThemedText } from "@/components/ThemedText";
+import { storage, StorageType } from "@/libs/storage";
 import { uuidGenerator } from "@/libs/uuid-generator";
+import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { FlatList, TextInput, TouchableHighlight, View } from "react-native";
 
@@ -11,25 +13,38 @@ type Message = {
   timestamp: number;
 };
 
+const buildMessage = (text: string, sender: string): Message => ({
+  id: uuidGenerator.generateUUID(),
+  text,
+  sender,
+  timestamp: Date.now(),
+});
+
 const Conversation = () => {
   const [textValue, setTextValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const { contactId } = useLocalSearchParams<{contactId: string}>();
 
-  const onMessageSent = () => {
-    const message: Message = {
-      id: uuidGenerator.generateUUID(),
-      text: textValue,
-      sender: "me",
-      timestamp: Date.now(),
-    };
+  const onMessageSent = async () => {
+    try {
+      const message: Message = buildMessage(textValue, "me");
 
-    setMessages((prevMessages) => {
-      const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
-      messagesCopy.push(message);
-      return messagesCopy;
-    });
+      setMessages((prevMessages) => {
+        const messagesCopy = prevMessages.map((msg) => ({ ...msg }));
+        messagesCopy.push(message);
+        return messagesCopy;
+      });
 
-    setTextValue("");
+      await storage.setItem(StorageType.conversations, {
+        [contactId]: messages,
+      });
+      // TODO: Inject the message to global conversation state so it can be visible in the conversations list
+      // TODO: send message to the server
+
+      setTextValue("");
+    } catch {
+      // if something fails in the process we should warn the user
+    }
   };
 
   return (
