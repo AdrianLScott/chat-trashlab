@@ -19,10 +19,9 @@ const setItem = async (key: StorageType, value: unknown): Promise<void> => {
 /**
  * Get item from local storage
  */
-const getItem = async (key: StorageType): Promise<unknown> => {
-  const item = await AsyncStorage.getItem(key);
-  return item ? JSON.parse(item) : null;
-}
+const getItem = async (key: StorageType): Promise<string | null> => {
+  return AsyncStorage.getItem(key);
+};
 
 export const storage = {
   setItem,
