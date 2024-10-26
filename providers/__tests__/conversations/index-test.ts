@@ -54,6 +54,7 @@ describe("getConversations", () => {
         lastMessage: "Hi",
         unreadMessages: 0,
         lastMessageTime: formatDate(new Date("2023-01-02T12:00:00Z").getTime()),
+        lastMessageTimestamp: new Date("2023-01-02T12:00:00Z").getTime(),
       },
       {
         id: "1",
@@ -63,6 +64,7 @@ describe("getConversations", () => {
         lastMessage: "Hello",
         unreadMessages: 0,
         lastMessageTime: formatDate(new Date("2023-01-01T12:00:00Z").getTime()),
+        lastMessageTimestamp: new Date("2023-01-01T12:00:00Z").getTime(),
       },
     ]);
   });
@@ -98,6 +100,7 @@ describe("getConversations", () => {
         lastMessage: "Hello",
         unreadMessages: 0,
         lastMessageTime: formatDate(storedConversations["1"][0].timestamp),
+        lastMessageTimestamp: storedConversations["1"][0].timestamp,
       },
     ]);
   });

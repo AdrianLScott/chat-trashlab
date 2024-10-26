@@ -3,7 +3,7 @@ import { Conversation } from ".";
 import { Contact } from "../contacts";
 
 export const latestFirst = (a: Conversation, b: Conversation) =>
-  a.lastMessageTime > b.lastMessageTime ? -1 : 1;
+  a.lastMessageTimestamp > b.lastMessageTimestamp ? -1 : 1;
 
 export const formatConversations = (
   storedConversations: StoredConversations,
@@ -23,6 +23,7 @@ export const formatConversations = (
       name: contact.name,
       lastMessage: lastMessage.text,
       unreadMessages: 0,
+      lastMessageTimestamp: lastMessage.timestamp,
       lastMessageTime: formatDate(lastMessage.timestamp),
     };
   });

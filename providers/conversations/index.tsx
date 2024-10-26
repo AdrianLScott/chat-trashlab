@@ -4,7 +4,6 @@
  */
 import {
   conversationsStore,
-  StoredConversations,
 } from "@/helpers/conversations-store";
 import { Contact } from "../contacts";
 import { formatConversations, latestFirst } from "./utils";
@@ -17,6 +16,7 @@ export type Conversation = {
   lastMessage: string;
   unreadMessages: number;
   lastMessageTime: string;
+  lastMessageTimestamp: number;
 };
 
 export const getConversations = async (contacts: Contact[]): Promise<Conversation[]> => {
