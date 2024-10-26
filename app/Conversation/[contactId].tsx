@@ -129,6 +129,7 @@ const Conversation = () => {
             return (
               <Message
                 align="left"
+                onDoubleTap={() => alert("You double tapped a message!")}
                 outwardMessageColor={inwardMessageColor}
                 outwardMessageTextColor={inwardMessageTextColor}
                 text={item.text}
