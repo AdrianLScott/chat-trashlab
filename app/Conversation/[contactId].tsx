@@ -1,5 +1,4 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
-import { ThemedText } from "@/components/ThemedText";
 import { conversationsStore } from "@/helpers/conversations-store";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { logger } from "@/libs/logger";
@@ -10,12 +9,12 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   FlatList,
-  StyleSheet,
   TextInput,
   TouchableHighlight,
   View,
 } from "react-native";
 import { Message } from "./components/Message";
+import { styles } from "./styles";
 
 type Message = {
   id: string;
@@ -44,8 +43,9 @@ const Conversation = () => {
   const highlightedButtonColor = useThemeColor({}, "buttonHighlighted");
 
   useEffect(() => {
+    // TODO: Improve how we fetch the conversation and error handling
     getContact(contactId)
-      .then((contact) => {
+      .then(async (contact) => {
         if (!contact) {
           alert("We had an issue fetching the contact, please try again later");
           logger.error("Error fetching contact");
@@ -64,11 +64,10 @@ const Conversation = () => {
             setMessages(storedMessages);
           }
         };
-
-        fetchMessages();
+        await fetchMessages();
       })
       .catch((e) => {
-        alert("We had an issue fetching the contact, please try again later");
+        alert("We had an issue while fetching conversation, please try again later");
         logger.error(e);
         router.navigate("/Contacts");
       });
@@ -159,32 +158,5 @@ const Conversation = () => {
     </ScreenContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  actionsContainer: {
-    flexDirection: "row",
-    paddingVertical: 5,
-    paddingHorizontal: 5,
-  },
-  inputContainer: {
-    flex: 1,
-    borderRadius: 10,
-    height: "100%",
-    borderWidth: 0.7,
-    marginRight: 5,
-    paddingHorizontal: 10,
-  },
-  textInput: {
-    flex: 1,
-  },
-  button: {
-    padding: 12,
-    borderRadius: 8,
-    paddingHorizontal: 20,
-  },
-});
 
 export default Conversation;
