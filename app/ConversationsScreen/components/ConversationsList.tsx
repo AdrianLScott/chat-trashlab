@@ -2,7 +2,7 @@ import { FlatList } from "react-native";
 import { ConversationsListHeader } from "./ConversationsListHeader";
 import { ThemedActivityIndicator } from "@/components/ThemedActivityIndicator";
 import { ConversationListEmptyComponent } from "./ConversationListEmptyComponent";
-import { ConversationPreview } from "@/components/ConversationPreview";
+import { ConversationPreview } from "@/app/ConversationsScreen/ConversationPreview";
 import { ConversationListDivider } from "./ConversationListDivider";
 import { Conversation } from "@/providers/conversations";
 import { CONVERSATIONS_LIST_LOADER_TEST_ID } from "./contants";

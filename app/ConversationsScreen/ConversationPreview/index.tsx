@@ -3,9 +3,9 @@ import { Image, StyleSheet, View } from "react-native";
 import { memo } from "react";
 import { Colors } from "@/constants/Colors";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { ThemedText } from "../ThemedText";
+import { ThemedText } from "@/components/ThemedText";
 import { styles } from "./styles";
-import { Avatar } from "../Avatar";
+import { Avatar } from "@/components/Avatar";
 
 type ConversationPreviewProps = {
   avatar: string;

@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 
-const AVATAR_SIZE = 50;
 const UNREAD_MESSAGE_BADGE_SIZE = 10;
 
 export const styles = StyleSheet.create({
