@@ -8,6 +8,7 @@ describe('ConversationsList', () => {
   const mockConversations: Conversation[] = [
     {
       id: '1',
+      contactId: '1',
       avatar: 'avatar1.png',
       lastMessage: 'Hello',
       lastMessageTime: '10:00 AM',
@@ -16,6 +17,7 @@ describe('ConversationsList', () => {
     },
     {
       id: '2',
+      contactId: '2',
       avatar: 'avatar2.png',
       lastMessage: 'Hi',
       lastMessageTime: '11:00 AM',
