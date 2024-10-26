@@ -1,5 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
-
+import { TouchableHighlight, View } from "react-native";
 import { memo } from "react";
 import { Colors } from "@/constants/Colors";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -13,6 +12,7 @@ type ConversationPreviewProps = {
   lastMessage: string;
   unreadMessages: number;
   lastMessageTime: string;
+  onPress: () => void;
 };
 
 export const ConversationPreview = memo(
@@ -22,38 +22,45 @@ export const ConversationPreview = memo(
     lastMessageTime,
     name,
     unreadMessages,
+    onPress
   }: ConversationPreviewProps) => {
     const primaryColor = useThemeColor({}, "primary");
+    const transparentHighlight = useThemeColor({}, "transparentHighlight");
 
     return (
-      <View style={styles.container}>
-        <Avatar uri={avatar} size="large" style={styles.avatar} />
-        <View style={styles.messageContainer}>
-          <View style={styles.messageHeaderContainer}>
-            <ThemedText style={styles.messageSenderName}>{name}</ThemedText>
-            <ThemedText
-              lightColor={Colors.light.secondaryText}
-              style={styles.lastMessageTime}
-            >
-              {lastMessageTime}
-            </ThemedText>
+      <TouchableHighlight underlayColor={transparentHighlight} style={styles.container} onPress={onPress}>
+        <>
+          <Avatar uri={avatar} size="large" style={styles.avatar} />
+          <View style={styles.messageContainer}>
+            <View style={styles.messageHeaderContainer}>
+              <ThemedText style={styles.messageSenderName}>{name}</ThemedText>
+              <ThemedText
+                lightColor={Colors.light.secondaryText}
+                style={styles.lastMessageTime}
+              >
+                {lastMessageTime}
+              </ThemedText>
+            </View>
+            <View style={styles.messageContentContainer}>
+              <ThemedText
+                numberOfLines={1}
+                style={styles.lastMessage}
+                lightColor={Colors.light.secondaryText}
+              >
+                {lastMessage}
+              </ThemedText>
+              {unreadMessages > 0 && (
+                <View
+                  style={[
+                    styles.unreadMessageBadge,
+                    { backgroundColor: primaryColor },
+                  ]}
+                />
+              )}
+            </View>
           </View>
-          <View style={styles.messageContentContainer}>
-            <ThemedText
-              numberOfLines={1}
-              style={styles.lastMessage}
-              lightColor={Colors.light.secondaryText}
-            >
-              {lastMessage}
-            </ThemedText>
-            {unreadMessages > 0 && (
-              <View
-                style={[styles.unreadMessageBadge, { backgroundColor: primaryColor }]}
-              />
-            )}
-          </View>
-        </View>
-      </View>
+        </>
+      </TouchableHighlight>
     );
   }
 );

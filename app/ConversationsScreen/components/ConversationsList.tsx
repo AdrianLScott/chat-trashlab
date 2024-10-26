@@ -31,6 +31,7 @@ export const ConversationsList = ({
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ConversationPreview
+          onPress={() => {}}
           avatar={item.avatar}
           lastMessage={item.lastMessage}
           lastMessageTime={item.lastMessageTime}
