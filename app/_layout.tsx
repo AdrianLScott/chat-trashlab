@@ -15,6 +15,10 @@ export default function RootLayout() {
           name="Contacts/index"
           options={{ presentation: "modal", headerTitle: "Contacts" }}
         />
+        <Stack.Screen
+          name="Conversation/[contactId]"
+          options={{ headerTitle: "Conversation" }}
+        />
       </Stack>
     </SafeAreaProvider>
   );
