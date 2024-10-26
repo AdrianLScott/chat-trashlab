@@ -1,7 +1,6 @@
 import { Avatar } from "@/components/Avatar";
 import { ThemedText } from "@/components/ThemedText";
-import { StyleSheet } from "react-native";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import { StyleSheet, TouchableHighlight } from "react-native";
 
 type ContactPreviewProps = {
   avatar: string;
