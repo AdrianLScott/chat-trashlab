@@ -18,5 +18,9 @@ export const Colors = {
     transparentHighlight: '#e6e6e6',
     buttonText: '#fff',
     inputBorder: '#858484',
+    outwardMessage: primary,
+    outwardMessageText: '#fff',
+    inwardMessage: '#f1f1f1',
+    inwardMessageText: '#3b3b3b',
   },
 };

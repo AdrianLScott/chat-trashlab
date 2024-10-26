@@ -15,6 +15,7 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
+import { Message } from "./components/Message";
 
 type Message = {
   id: string;
@@ -34,10 +35,13 @@ const Conversation = () => {
   const [textValue, setTextValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
-
-  const buttonTextColor = useThemeColor({}, "buttonText");
   const buttonColor = useThemeColor({}, "button");
   const inputBorder = useThemeColor({}, "inputBorder");
+  const outwardMessageColor = useThemeColor({}, "outwardMessage");
+  const outwardMessageTextColor = useThemeColor({}, "outwardMessageText");
+  const inwardMessageColor = useThemeColor({}, "inwardMessage");
+  const inwardMessageTextColor = useThemeColor({}, "inwardMessageText");
+  const highlightedButtonColor = useThemeColor({}, "buttonHighlighted");
 
   useEffect(() => {
     getContact(contactId)
@@ -83,7 +87,6 @@ const Conversation = () => {
       await conversationsStore.storeNewMessage(contactId, newMessage);
       // TODO: Inject the message to global conversation state so it can be visible in the conversations list
       // TODO: send message to the server
-
       setTextValue("");
 
       // Temp: Simulate a user response
@@ -112,9 +115,29 @@ const Conversation = () => {
       <View style={styles.container}>
         <FlatList
           data={messages}
+          style={{ paddingHorizontal: 10 }}
           keyExtractor={(item) => item.id}
-          inverted
-          renderItem={({ item }) => <ThemedText>{item.text}</ThemedText>}
+          contentContainerStyle={{ paddingTop: 15 }}
+          renderItem={({ item }) => {
+            if (item.sender === "me") {
+              return (
+                <Message
+                  align="right"
+                  outwardMessageColor={outwardMessageColor}
+                  outwardMessageTextColor={outwardMessageTextColor}
+                  text={item.text}
+                />
+              );
+            }
+            return (
+              <Message
+                align="left"
+                outwardMessageColor={inwardMessageColor}
+                outwardMessageTextColor={inwardMessageTextColor}
+                text={item.text}
+              />
+            );
+          }}
         />
       </View>
       <View style={styles.actionsContainer}>
@@ -127,6 +150,7 @@ const Conversation = () => {
         </View>
         <TouchableHighlight
           onPress={onMessageSent}
+          underlayColor={highlightedButtonColor}
           style={[styles.button, { backgroundColor: buttonColor }]}
         >
           <MaterialCommunityIcons name="send" color={"white"} size={30} />
