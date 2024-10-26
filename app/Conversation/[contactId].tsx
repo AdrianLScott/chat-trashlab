@@ -139,12 +139,14 @@ const Conversation = () => {
       </View>
       <View style={styles.actionsContainer}>
         <View style={[styles.inputContainer, { borderColor: inputBorder }]}>
+          {/* TODO: It should be a ThemedInput from global components folder */}
           <TextInput
             style={styles.textInput}
             value={textValue}
             onChangeText={(val) => setTextValue(val)}
           />
         </View>
+        {/* TODO: Move to global components folder */}
         <TouchableHighlight
           onPress={onMessageSent}
           underlayColor={highlightedButtonColor}
