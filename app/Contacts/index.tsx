@@ -1,8 +1,26 @@
-import { ThemedText } from "@/components/ThemedText";
+import { ScreenContainer } from "@/components/ScreenContainer";
+import { SectionList } from "react-native";
+import { useContactsSectionList } from "./hooks/useContactsSectionList";
+import { ContactPreview } from "./components/ContactPreview";
+import { SectionListHeader } from "./components/SectionListHeader";
 
 const Contacts = () => {
+  const { sections } = useContactsSectionList();
+
   return (
-    <ThemedText>This is contacts page</ThemedText>
+    <ScreenContainer>
+      <SectionList
+        sections={sections}
+        contentContainerStyle={{ paddingHorizontal: 10 }}
+        renderItem={({ item }) => (
+          <ContactPreview {...item} onPress={() => {}} />
+        )}
+        stickySectionHeadersEnabled
+        renderSectionHeader={({ section: { title } }) => (
+          <SectionListHeader title={title} />
+        )}
+      ></SectionList>
+    </ScreenContainer>
   );
 };
 
