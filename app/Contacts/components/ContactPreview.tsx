@@ -1,5 +1,6 @@
 import { Avatar } from "@/components/Avatar";
 import { ThemedText } from "@/components/ThemedText";
+import { memo } from "react";
 import { StyleSheet, TouchableHighlight } from "react-native";
 
 type ContactPreviewProps = {
@@ -8,24 +9,22 @@ type ContactPreviewProps = {
   onPress: () => void;
 };
 
-export const ContactPreview = ({
-  avatar,
-  name,
-  onPress,
-}: ContactPreviewProps) => {
-  return (
-    <TouchableHighlight
-      onPress={onPress}
-      underlayColor={"#e6e6e6"}
-      style={styles.container}
-    >
-      <>
-        <Avatar uri={avatar} style={{ marginRight: 15 }} />
-        <ThemedText>{name}</ThemedText>
-      </>
-    </TouchableHighlight>
-  );
-};
+export const ContactPreview = memo(
+  ({ avatar, name, onPress }: ContactPreviewProps) => {
+    return (
+      <TouchableHighlight
+        onPress={onPress}
+        underlayColor={"#e6e6e6"}
+        style={styles.container}
+      >
+        <>
+          <Avatar uri={avatar} style={{ marginRight: 15 }} />
+          <ThemedText type="default">{name}</ThemedText>
+        </>
+      </TouchableHighlight>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
