@@ -6,6 +6,7 @@ import { ConversationPreview } from "@/app/ConversationsScreen/ConversationPrevi
 import { ConversationListDivider } from "./ConversationListDivider";
 import { Conversation } from "@/providers/conversations";
 import { CONVERSATIONS_LIST_LOADER_TEST_ID } from "./contants";
+import { router } from "expo-router";
 
 type ConversationsListProps = {
   conversations: Conversation[];
@@ -31,7 +32,7 @@ export const ConversationsList = ({
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <ConversationPreview
-          onPress={() => {}}
+          onPress={() => router.navigate(`/Conversation/${item.id}`)}
           avatar={item.avatar}
           lastMessage={item.lastMessage}
           lastMessageTime={item.lastMessageTime}
