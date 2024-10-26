@@ -1,6 +1,6 @@
 import { ScreenContainer } from "@/components/ScreenContainer";
 import { ThemedText } from "@/components/ThemedText";
-import { generateUUID } from "@/libs/uuid-generator";
+import { uuidGenerator } from "@/libs/uuid-generator";
 import { useState } from "react";
 import { FlatList, TextInput, TouchableHighlight, View } from "react-native";
 
@@ -17,7 +17,7 @@ const Conversation = () => {
 
   const onMessageSent = () => {
     const message: Message = {
-      id: generateUUID(),
+      id: uuidGenerator.generateUUID(),
       text: textValue,
       sender: "me",
       timestamp: Date.now(),
